@@ -1,0 +1,57 @@
+---
+layout: default
+---
+<div class="content-wrapper">
+  <div class="container">
+    <div class="content-grid">
+      <main class="main-content">
+        <article>
+
+          <header class="post-header">
+            <div class="post-header-cats">
+              {% if page.category %}<span class="badge badge-{{ page.category | downcase }}">{{ page.category }}</span>{% endif %}
+              {% if page.genre %}<span class="badge badge-article">{{ page.genre }}</span>{% endif %}
+              {% if page.lang %}<span class="badge badge-{{ page.lang }}">{{ page.lang | upcase }}</span>{% endif %}
+            </div>
+            <h1 class="post-title">{{ page.title }}</h1>
+            <div class="post-meta">
+              <span>{{ page.date | date: "%B %d, %Y" }}</span>
+              {% if page.author %}<span>by {{ page.author }}</span>{% endif %}
+              {% if page.duration %}<span>{{ page.duration }}</span>{% endif %}
+              {% if page.rating %}<span class="post-meta-rating">&#9733; {{ page.rating }}/10</span>{% endif %}
+              {% if page.release_date %}<span>Release: {{ page.release_date }}</span>{% endif %}
+            </div>
+          </header>
+
+          {% if page.image %}
+          <img src="{{ page.image }}" alt="{{ page.title }}" class="post-poster">
+          {% endif %}
+
+          {% if page.rating %}
+          <div class="rating-box">
+            <div>
+              <div class="rating-score">{{ page.rating }}</div>
+              <div class="rating-label">out of 10</div>
+            </div>
+            <div>
+              <div class="rating-stars">
+                {% assign full_stars = page.rating | divided_by: 2 | floor %}
+                {% for i in (1..full_stars) %}&#9733;{% endfor %}
+              </div>
+              {% if page.verdict %}<div class="rating-verdict">{{ page.verdict }}</div>{% endif %}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="post-body">
+            {{ content }}
+          </div>
+
+        </article>
+      </main>
+      <aside class="sidebar">
+        {% include sidebar.html %}
+      </aside>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+---
+layout: home
+title: Home
+---
+
+{% assign featured = site.posts | first %}
+{% if featured %}
+<a href="{{ featured.url | relative_url }}" class="featured-post">
+    {% if featured.image %}
+    <img src="{{ featured.image }}" alt="{{ featured.title }}">
+    {% else %}
+    <div style="width:100%;height:100%;background:#1e1e1e;"></div>
+    {% endif %}
+    <div class="featured-overlay">
+        {% if featured.category %}<span class="featured-label">{{ featured.category }}</span>{% endif %}
+        <h2 class="featured-title">{{ featured.title }}</h2>
+        <div class="featured-meta">
+            <span>{{ featured.date | date: "%B %d, %Y" }}</span>
+            {% if featured.rating %}<span class="featured-rating">&#9733; {{ featured.rating }}/10</span>{% endif %}
+            {% if featured.genre %}<span>{{ featured.genre }}</span>{% endif %}
+        </div>
+    </div>
+</a>
+{% endif %}
+
+{% assign reviews = site.posts | where: "category", "Review" | limit: 6 %}
+{% if reviews.size > 0 %}
+<h2 class="section-label">Latest Reviews</h2>
+<div class="posts-grid">
+    {% for post in reviews %}
+    <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">
+        <a href="{{ post.url | relative_url }}">
+            <div class="post-card-thumb">
+                {% if post.image %}<img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+            </div>
+            <div class="post-card-body">
+                <div class="post-card-cats">
+                    <span class="badge badge-review">Review</span>
+                    {% if post.lang %}<span class="badge badge-{{ post.lang }}">{{ post.lang | upcase }}</span>{% endif
+                    %}
+                </div>
+                <h3 class="post-card-title">{{ post.title }}</h3>
+                <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 110 }}</p>
+                <div class="post-card-meta">
+                    <span>{{ post.date | date: "%b %d, %Y" }}</span>
+                    {% if post.rating %}<span class="post-card-rating">&#9733; {{ post.rating }}/10</span>{% endif %}
+                </div>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% assign upcoming_posts = site.posts | where: "category", "Upcoming" | limit: 4 %}
+{% if upcoming_posts.size > 0 %}
+<h2 class="section-label">Upcoming Films</h2>
+<div class="post-list">
+    {% for post in upcoming_posts %}
+    <article class="post-list-item" data-lang="{{ post.lang | default: 'both' }}">
+        <div class="post-list-thumb">
+            {% if post.image %}<img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+        </div>
+        <div class="post-list-body">
+            <span class="badge badge-upcoming">Upcoming</span>
+            <a href="{{ post.url | relative_url }}" class="post-list-title">{{ post.title }}</a>
+            <div class="post-list-meta">
+                {{ post.date | date: "%b %d, %Y" }}
+                {% if post.release_date %} &mdash; Release: {{ post.release_date }}{% endif %}
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% assign articles = site.posts | where: "category", "Article" | limit: 3 %}
+{% if articles.size > 0 %}
+<h2 class="section-label">Articles</h2>
+<div class="posts-grid">
+    {% for post in articles %}
+    <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">
+        <a href="{{ post.url | relative_url }}">
+            <div class="post-card-thumb">
+                {% if post.image %}<img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+            </div>
+            <div class="post-card-body">
+                <div class="post-card-cats">
+                    <span class="badge badge-article">Article</span>
+                    {% if post.lang %}<span class="badge badge-{{ post.lang }}">{{ post.lang | upcase }}</span>{% endif
+                    %}
+                </div>
+                <h3 class="post-card-title">{{ post.title }}</h3>
+                <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 110 }}</p>
+                <div class="post-card-meta">
+                    <span>{{ post.date | date: "%b %d, %Y" }}</span>
+                </div>
+            </div>
+        </a>
+    </article>
+    {% endfor %}
+</div>
+{% endif %}

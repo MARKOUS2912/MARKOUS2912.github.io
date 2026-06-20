@@ -1,0 +1,40 @@
+---
+layout: home
+title: Reviews
+description: All movie reviews on Skibidi Reviews
+---
+
+<div class="page-header" style="margin: -36px -0px 28px; padding: 28px 0;">
+  <h1>All Reviews</h1>
+  <p>{% assign rev_count = site.posts | where: "category", "Review" | size %}{{ rev_count }} review{% if rev_count != 1 %}s{% endif %} published</p>
+</div>
+
+{% assign reviews = site.posts | where: "category", "Review" %}
+{% if reviews.size > 0 %}
+<div class="posts-grid">
+  {% for post in reviews %}
+  <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">
+    <a href="{{ post.url | relative_url }}">
+      <div class="post-card-thumb">
+        {% if post.image %}<img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+      </div>
+      <div class="post-card-body">
+        <div class="post-card-cats">
+          <span class="badge badge-review">Review</span>
+          {% if post.genre %}<span class="badge badge-article">{{ post.genre }}</span>{% endif %}
+          {% if post.lang %}<span class="badge badge-{{ post.lang }}">{{ post.lang | upcase }}</span>{% endif %}
+        </div>
+        <h3 class="post-card-title">{{ post.title }}</h3>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 110 }}</p>
+        <div class="post-card-meta">
+          <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          {% if post.rating %}<span class="post-card-rating">&#9733; {{ post.rating }}/10</span>{% endif %}
+        </div>
+      </div>
+    </a>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color:var(--muted);text-align:center;padding:60px 0;">No reviews yet. Check back soon!</p>
+{% endif %}

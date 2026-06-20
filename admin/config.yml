@@ -1,0 +1,71 @@
+backend:
+  name: github
+  repo: MARKOUS2912/MARKOUS2912.github.io
+  branch: main
+
+media_folder: assets/images
+public_folder: /assets/images
+
+collections:
+  - name: posts
+    label: Articles & Reviews
+    folder: _posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: "Review", value: "Review" }
+          - { label: "Upcoming Film", value: "Upcoming" }
+          - { label: "Article", value: "Article" }
+      - label: Genre
+        name: genre
+        widget: select
+        options:
+          - Action
+          - Drama
+          - Thriller
+          - Comedy
+          - Horror
+          - Animation
+          - Musical
+          - Sci-Fi
+          - Romance
+          - Documentary
+      - label: Language
+        name: lang
+        widget: select
+        options:
+          - { label: "English", value: "en" }
+          - { label: "Greek (Ελληνικά)", value: "gr" }
+          - { label: "Both", value: "both" }
+      - { label: Poster Image, name: image, widget: image, required: false }
+      - label: "Rating (0–10)"
+        name: rating
+        widget: number
+        min: 0
+        max: 10
+        step: 0.5
+        required: false
+        value_type: float
+      - { label: "Verdict (short phrase)", name: verdict, widget: string, required: false }
+      - { label: "Duration", name: duration, widget: string, required: false, hint: "e.g. 2h 15m" }
+      - { label: "Release Date (Upcoming only)", name: release_date, widget: string, required: false, hint: "e.g. May 1, 2026" }
+      - { label: Author, name: author, widget: string, default: "Skibidi Reviews" }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        hint: "Add tags like Marvel, Action, Comedy"
+      - label: Excerpt
+        name: excerpt
+        widget: text
+        required: false
+        hint: "Short summary shown on article cards (1–2 sentences)"
+      - { label: Body, name: body, widget: markdown }

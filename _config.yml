@@ -1,0 +1,31 @@
+title: Skibidi Reviews
+tagline: Movie Reviews & Articles / Κριτικές Ταινιών & Άρθρα
+description: Honest movie reviews and articles in Greek and English.
+baseurl: ""
+url: "https://MARKOUS2912.github.io"
+lang: en
+permalink: /:year/:month/:day/:title/
+encoding: utf-8
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+markdown: kramdown
+highlighter: rouge
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .gitignore
+  - node_modules
+
+social:
+  instagram: ""
+  youtube: ""
+  tiktok: ""
+
+author:
+  name: Skibidi Reviews

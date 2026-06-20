@@ -1,0 +1,75 @@
+<!-- Search -->
+<div class="sidebar-widget">
+  <h3 class="widget-title">Search</h3>
+  <div class="search-wrapper">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-input" placeholder="Search articles..." aria-label="Search">
+  </div>
+</div>
+
+<!-- Recent Posts -->
+<div class="sidebar-widget">
+  <h3 class="widget-title">Recent Posts</h3>
+  <div class="widget-post-list">
+    {% for post in site.posts limit: 5 %}
+    <div class="widget-post-item">
+      {% if post.image %}
+      <div class="widget-post-thumb">
+        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+      </div>
+      {% endif %}
+      <div>
+        <a href="{{ post.url | relative_url }}" class="widget-post-title">{{ post.title }}</a>
+        <div class="widget-post-date">{{ post.date | date: "%b %d, %Y" }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Top Rated -->
+<div class="sidebar-widget">
+  <h3 class="widget-title">Top Rated</h3>
+  <div class="widget-post-list">
+    {% assign top_rated = site.posts | where_exp: "p", "p.rating" | sort: "rating" | reverse | limit: 4 %}
+    {% for post in top_rated %}
+    <div class="widget-post-item">
+      {% if post.image %}
+      <div class="widget-post-thumb">
+        <img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
+      </div>
+      {% endif %}
+      <div>
+        <a href="{{ post.url | relative_url }}" class="widget-post-title">{{ post.title }}</a>
+        <div class="widget-post-date">{% if post.rating %}&#9733; {{ post.rating }}/10{% endif %}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Tags -->
+{% assign all_tags = site.posts | map: "tags" | join: "," | split: "," | sort | uniq %}
+{% if all_tags.size > 0 %}
+<div class="sidebar-widget">
+  <h3 class="widget-title">Tags</h3>
+  <div class="tags-cloud">
+    {% for tag in all_tags %}
+    {% assign t = tag | strip %}
+    {% if t != "" %}
+    <a href="{{ '/categories/' | relative_url }}#{{ t | downcase | url_encode }}" class="tag-item">{{ t }}</a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Newsletter -->
+<div class="sidebar-widget">
+  <h3 class="widget-title">Newsletter</h3>
+  <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--accent);font-size:13px;\'>&#10003; Subscribed! Thank you.</p>';">
+    <p>Get the latest reviews straight to your inbox.</p>
+    <input type="email" placeholder="your@email.com" required aria-label="Email address">
+    <button type="submit">Subscribe</button>
+  </form>
+</div>

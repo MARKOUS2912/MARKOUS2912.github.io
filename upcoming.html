@@ -1,0 +1,40 @@
+---
+layout: home
+title: Upcoming Films
+description: Articles and previews about upcoming films
+---
+
+<div class="page-header" style="margin: -36px -0px 28px; padding: 28px 0;">
+  <h1>Upcoming Films</h1>
+  <p>What to watch next</p>
+</div>
+
+{% assign upcoming_posts = site.posts | where: "category", "Upcoming" %}
+{% if upcoming_posts.size > 0 %}
+<div class="posts-grid posts-grid-2">
+  {% for post in upcoming_posts %}
+  <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">
+    <a href="{{ post.url | relative_url }}">
+      <div class="post-card-thumb">
+        {% if post.image %}<img src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+      </div>
+      <div class="post-card-body">
+        <div class="post-card-cats">
+          <span class="badge badge-upcoming">Upcoming</span>
+          {% if post.genre %}<span class="badge badge-article">{{ post.genre }}</span>{% endif %}
+          {% if post.lang %}<span class="badge badge-{{ post.lang }}">{{ post.lang | upcase }}</span>{% endif %}
+        </div>
+        <h3 class="post-card-title">{{ post.title }}</h3>
+        <p class="post-card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+        <div class="post-card-meta">
+          <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          {% if post.release_date %}<span>Release: {{ post.release_date }}</span>{% endif %}
+        </div>
+      </div>
+    </a>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color:var(--muted);text-align:center;padding:60px 0;">No upcoming film articles yet. Check back soon!</p>
+{% endif %}
