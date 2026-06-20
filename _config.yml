@@ -6,6 +6,7 @@ url: "https://MARKOUS2912.github.io"
 lang: en
 permalink: /:year/:month/:day/:title/
 encoding: utf-8
+future: true
 
 plugins:
   - jekyll-feed
