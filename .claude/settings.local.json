@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:tomandchill.com)",
-      "PowerShell($base = \"i:\\\\development\\\\lias&mar\"; @\\(\"_layouts\",\"_includes\",\"_posts\",\"assets\\\\css\",\"assets\\\\js\",\"assets\\\\images\",\"admin\"\\) | ForEach-Object { New-Item -ItemType Directory -Force -Path \"$base\\\\$_\" | Out-Null }; Write-Host \"Done\")"
-    ]
-  }
-}
