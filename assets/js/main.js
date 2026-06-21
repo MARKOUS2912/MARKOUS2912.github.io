@@ -12,17 +12,22 @@
 
 // Language switcher
 (function () {
-  const btns = document.querySelectorAll('.lang-btn');
+  var btns = document.querySelectorAll('.lang-btn');
   if (!btns.length) return;
 
   function applyLang(lang) {
     localStorage.setItem('skibidi-lang', lang);
+
+    // sync all lang buttons (desktop + mobile)
     btns.forEach(function (b) {
       b.classList.toggle('active', b.dataset.lang === lang);
     });
+
+    // filter cards — but never touch .featured-post (slider handles those)
     document.querySelectorAll('[data-lang]').forEach(function (el) {
-      const elLang = el.dataset.lang;
-      const show = lang === 'all' || elLang === lang || elLang === 'both';
+      if (el.classList.contains('featured-post')) return;
+      var elLang = el.dataset.lang;
+      var show = lang === 'all' || elLang === lang || elLang === 'both';
       el.style.display = show ? '' : 'none';
     });
   }
