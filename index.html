@@ -3,24 +3,39 @@ layout: home
 title: Home
 ---
 
-{% assign featured = site.posts | first %}
-{% if featured %}
-<a href="{{ featured.url | relative_url }}" class="featured-post">
-    {% if featured.image %}
-    <img src="{{ featured.image }}" alt="{{ featured.title }}">
+{% assign featured_posts = site.posts | limit: 5 %}
+{% if featured_posts.size > 0 %}
+<div class="featured-slider" id="featuredSlider">
+
+  {% for post in featured_posts %}
+  <a href="{{ post.url | relative_url }}" class="featured-post{% if forloop.first %} active{% endif %}">
+    {% if post.image %}
+    <img src="{{ post.image }}" alt="{{ post.title }}">
     {% else %}
     <div style="width:100%;height:100%;background:#1e1e1e;"></div>
     {% endif %}
     <div class="featured-overlay">
-        {% if featured.category %}<span class="featured-label">{{ featured.category }}</span>{% endif %}
-        <h2 class="featured-title">{{ featured.title }}</h2>
-        <div class="featured-meta">
-            <span>{{ featured.date | date: "%B %d, %Y" }}</span>
-            {% if featured.rating %}<span class="featured-rating">&#9733; {{ featured.rating }}/10</span>{% endif %}
-            {% if featured.genre %}<span>{{ featured.genre }}</span>{% endif %}
-        </div>
+      {% if post.category %}<span class="featured-label">{{ post.category }}</span>{% endif %}
+      <h2 class="featured-title">{{ post.title }}</h2>
+      <div class="featured-meta">
+        <span>{{ post.date | date: "%B %d, %Y" }}</span>
+        {% if post.rating %}<span class="featured-rating">&#9733; {{ post.rating }}/10</span>{% endif %}
+        {% if post.genre %}<span>{{ post.genre }}</span>{% endif %}
+      </div>
     </div>
-</a>
+  </a>
+  {% endfor %}
+
+  <button class="slider-arrow slider-prev" id="sliderPrev" aria-label="Previous">&#8249;</button>
+  <button class="slider-arrow slider-next" id="sliderNext" aria-label="Next">&#8250;</button>
+
+  <div class="slider-dots" id="sliderDots">
+    {% for post in featured_posts %}
+    <button class="slider-dot{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="Slide {{ forloop.index }}"></button>
+    {% endfor %}
+  </div>
+
+</div>
 {% endif %}
 
 {% assign reviews = site.posts | where: "category", "Review" | limit: 6 %}
