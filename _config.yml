@@ -30,3 +30,12 @@ social:
 
 author:
   name: Skibidi Reviews
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      lang: en
+      author: "Skibidi Reviews"
