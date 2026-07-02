@@ -1,4 +1,4 @@
-title: Skibidi Reviews
+title: AvocadoSat Films
 tagline: Movie Reviews & Articles / Κριτικές Ταινιών & Άρθρα
 description: Honest movie reviews and articles in Greek and English.
 baseurl: ""
@@ -29,7 +29,7 @@ social:
   tiktok: ""
 
 author:
-  name: Skibidi Reviews
+  name: AvocadoSat Films
 
 defaults:
   - scope:
@@ -38,4 +38,4 @@ defaults:
     values:
       layout: post
       lang: en
-      author: "Skibidi Reviews"
+      author: "AvocadoSat Films"

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Maker — AvocadoSat Films</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --card: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0f0;
+      --muted: #888;
+      --accent: #d4a017;
+      --accent-hover: #e8b830;
+      --green: #1e8a4a;
+      --red: #c0392b;
+      --radius: 8px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER */
+    .app-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+    }
+
+    .app-logo span { color: var(--accent); }
+
+    .app-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* LAYOUT */
+    .app-body {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      height: calc(100vh - 57px);
+    }
+
+    /* FORM PANEL */
+    .form-panel {
+      overflow-y: auto;
+      padding: 28px 32px;
+      border-right: 1px solid var(--border);
+    }
+
+    .form-section {
+      margin-bottom: 28px;
+    }
+
+    .form-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .field label .req { color: var(--accent); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="url"],
+    select,
+    textarea {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.18s;
+      width: 100%;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+
+    select option { background: #1a1a1a; }
+
+    textarea { resize: vertical; line-height: 1.6; }
+
+    /* BODY EDITOR */
+    .toolbar {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .tb-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 4px 9px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .tb-btn:hover {
+      background: rgba(212,160,23,0.12);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    #bodyTextarea {
+      min-height: 240px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    /* CONDITIONAL FIELDS */
+    .review-fields, .upcoming-fields { display: none; }
+    .review-fields.show, .upcoming-fields.show { display: block; }
+
+    /* PREVIEW PANEL */
+    .preview-panel {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .preview-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .preview-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .preview-code {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      color: rgba(240,240,240,0.75);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .preview-footer {
+      border-top: 1px solid var(--border);
+      padding: 16px 20px;
+      flex-shrink: 0;
+    }
+
+    .filename-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .filename-badge span {
+      background: rgba(212,160,23,0.1);
+      border: 1px solid rgba(212,160,23,0.25);
+      color: var(--accent);
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+    }
+
+    .download-btn {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: background 0.18s, transform 0.15s;
+    }
+
+    .download-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .download-btn:active { transform: translateY(0); }
+
+    .upload-hint {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .upload-hint a { color: var(--accent); }
+
+    /* SCROLLBARS */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* SUCCESS TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--green);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.25s;
+      pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .app-body { grid-template-columns: 1fr; height: auto; }
+      .preview-panel { height: 400px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-logo">AVOCADOSAT<span>FILMS</span> &mdash; Article Maker</div>
+  <div class="app-subtitle">Fill in the form → Download file → Drop in <code style="color:var(--accent)">_posts/</code> on GitHub</div>
+</header>
+
+<div class="app-body">
+
+  <!-- FORM -->
+  <div class="form-panel">
+
+    <!-- Basic Info -->
+    <div class="form-section">
+      <div class="form-section-title">Basic Info</div>
+
+      <div class="field">
+        <label>Title <span class="req">*</span></label>
+        <input type="text" id="title" placeholder="e.g. Deadpool & Wolverine Review" oninput="update()">
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" id="date" oninput="update()">
+        </div>
+        <div class="field">
+          <label>Author</label>
+          <input type="text" id="author" value="AvocadoSat Films" oninput="update()">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Category <span class="req">*</span></label>
+          <select id="category" onchange="onCategoryChange(); update()">
+            <option value="Review">Review</option>
+            <option value="Upcoming">Upcoming Film</option>
+            <option value="Article">Article</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Genre</label>
+          <select id="genre" onchange="update()">
+            <option value="">— Select genre —</option>
+            <option>Action</option>
+            <option>Drama</option>
+            <option>Thriller</option>
+            <option>Comedy</option>
+            <option>Horror</option>
+            <option>Animation</option>
+            <option>Musical</option>
+            <option>Sci-Fi</option>
+            <option>Romance</option>
+            <option>Documentary</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Language</label>
+        <select id="lang" onchange="update()">
+          <option value="en">English (EN)</option>
+          <option value="gr">Greek / Ελληνικά (GR)</option>
+          <option value="both">Both</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Media -->
+    <div class="form-section">
+      <div class="form-section-title">Poster / Image</div>
+      <div class="field">
+        <label>Image URL</label>
+        <input type="url" id="image" placeholder="https://image.tmdb.org/t/p/w1280/..." oninput="update()">
+      </div>
+    </div>
+
+    <!-- Review fields -->
+    <div class="form-section review-fields show" id="reviewFields">
+      <div class="form-section-title">Review Details</div>
+      <div class="form-row">
+        <div class="field">
+          <label>Rating (0–10)</label>
+          <input type="number" id="rating" min="0" max="10" step="0.5" placeholder="e.g. 8.5" oninput="update()">
+        </div>
+        <div class="field">
+          <label>Duration</label>
+          <input type="text" id="duration" placeholder="e.g. 2h 7m" oninput="update()">
+        </div>
+      </div>
+      <div class="field">
+        <label>Verdict (short phrase)</label>
+        <input type="text" id="verdict" placeholder="e.g. Absolute Cinema" oninput="update()">
+      </div>
+    </div>
+
+    <!-- Upcoming fields -->
+    <div class="form-section upcoming-fields" id="upcomingFields">
+      <div class="form-section-title">Upcoming Details</div>
+      <div class="field">
+        <label>Release Date</label>
+        <input type="text" id="releaseDate" placeholder="e.g. May 1, 2026" oninput="update()">
+      </div>
+    </div>
+
+    <!-- Tags & Excerpt -->
+    <div class="form-section">
+      <div class="form-section-title">Tags & Excerpt</div>
+      <div class="field">
+        <label>Tags (comma separated)</label>
+        <input type="text" id="tags" placeholder="Marvel, Action, Comedy" oninput="update()">
+      </div>
+      <div class="field">
+        <label>Excerpt (shown on cards)</label>
+        <textarea id="excerpt" rows="2" placeholder="Short summary, 1–2 sentences." oninput="update()"></textarea>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="form-section">
+      <div class="form-section-title">Article Body (Markdown)</div>
+      <div class="toolbar">
+        <button class="tb-btn" onclick="insert('**','**','bold text')" type="button">B</button>
+        <button class="tb-btn" onclick="insert('*','*','italic text')" type="button"><em>I</em></button>
+        <button class="tb-btn" onclick="insertLine('## ')" type="button">H2</button>
+        <button class="tb-btn" onclick="insertLine('### ')" type="button">H3</button>
+        <button class="tb-btn" onclick="insertLine('> ')" type="button">❝</button>
+        <button class="tb-btn" onclick="insertLine('- ')" type="button">List</button>
+        <button class="tb-btn" onclick="insertLine('---\n')" type="button">HR</button>
+      </div>
+      <div class="field">
+        <textarea id="bodyTextarea" rows="14" placeholder="Write your article here in Markdown...&#10;&#10;Use ## for headings, **bold**, *italic*, > for quotes." oninput="update()"></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-panel">
+    <div class="preview-header">
+      <h3>Preview</h3>
+      <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+    </div>
+    <pre class="preview-code" id="previewCode"></pre>
+    <div class="preview-footer">
+      <div class="filename-badge">
+        File: <span id="filenameDisplay">2025-06-20-article.md</span>
+      </div>
+      <button class="download-btn" onclick="downloadFile()">&#11123; Download .md File</button>
+      <p class="upload-hint">
+        Then go to your
+        <a href="https://github.com/MARKOUS2912/MARKOUS2912.github.io/upload/main/_posts" target="_blank">GitHub _posts/ folder</a>
+        and upload the file.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // Set today's date as default
+  document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+  function onCategoryChange() {
+    const cat = document.getElementById('category').value;
+    document.getElementById('reviewFields').classList.toggle('show', cat === 'Review');
+    document.getElementById('upcomingFields').classList.toggle('show', cat === 'Upcoming');
+  }
+
+  function toSlug(str) {
+    return str
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .substring(0, 60);
+  }
+
+  function getFilename() {
+    const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+    const title = document.getElementById('title').value || 'article';
+    return `${date}-${toSlug(title)}.md`;
+  }
+
+  function generateMarkdown() {
+    const title    = document.getElementById('title').value;
+    const date     = document.getElementById('date').value;
+    const author   = document.getElementById('author').value || 'AvocadoSat Films';
+    const category = document.getElementById('category').value;
+    const genre    = document.getElementById('genre').value;
+    const lang     = document.getElementById('lang').value;
+    const image    = document.getElementById('image').value;
+    const rating   = document.getElementById('rating').value;
+    const duration = document.getElementById('duration').value;
+    const verdict  = document.getElementById('verdict').value;
+    const release  = document.getElementById('releaseDate').value;
+    const tagsRaw  = document.getElementById('tags').value;
+    const excerpt  = document.getElementById('excerpt').value;
+    const body     = document.getElementById('bodyTextarea').value;
+
+    let fm = '---\n';
+    fm += 'layout: post\n';
+    if (title)    fm += `title: "${title.replace(/"/g, '\\"')}"\n`;
+    if (date)     fm += `date: ${date}\n`;
+    fm += `category: ${category}\n`;
+    if (genre)    fm += `genre: ${genre}\n`;
+    fm += `lang: ${lang}\n`;
+    if (image)    fm += `image: "${image}"\n`;
+    if (category === 'Review') {
+      if (rating)   fm += `rating: ${rating}\n`;
+      if (verdict)  fm += `verdict: "${verdict.replace(/"/g, '\\"')}"\n`;
+      if (duration) fm += `duration: "${duration}"\n`;
+    }
+    if (category === 'Upcoming') {
+      if (release) fm += `release_date: "${release}"\n`;
+    }
+    fm += `author: "${author}"\n`;
+    if (tagsRaw) {
+      const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
+      if (tags.length) fm += `tags: [${tags.join(', ')}]\n`;
+    }
+    if (excerpt) fm += `excerpt: "${excerpt.replace(/"/g, '\\"').replace(/\n/g, ' ')}"\n`;
+    fm += '---\n';
+    if (body) fm += '\n' + body;
+
+    return fm;
+  }
+
+  function update() {
+    const md = generateMarkdown();
+    document.getElementById('previewCode').textContent = md;
+    document.getElementById('filenameDisplay').textContent = getFilename();
+  }
+
+  function downloadFile() {
+    const title = document.getElementById('title').value;
+    if (!title) { showToast('Add a title first!'); return; }
+
+    const content = generateMarkdown();
+    const filename = getFilename();
+    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Downloaded: ' + filename);
+  }
+
+  function copyToClipboard() {
+    const text = generateMarkdown();
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // Markdown toolbar helpers
+  function insert(before, after, placeholder) {
+    const ta = document.getElementById('bodyTextarea');
+    const start = ta.selectionStart;
+    const end = ta.selectionEnd;
+    const selected = ta.value.substring(start, end) || placeholder;
+    const replacement = before + selected + after;
+    ta.value = ta.value.substring(0, start) + replacement + ta.value.substring(end);
+    ta.selectionStart = start + before.length;
+    ta.selectionEnd = start + before.length + selected.length;
+    ta.focus();
+    update();
+  }
+
+  function insertLine(prefix) {
+    const ta = document.getElementById('bodyTextarea');
+    const start = ta.selectionStart;
+    const lineStart = ta.value.lastIndexOf('\n', start - 1) + 1;
+    ta.value = ta.value.substring(0, lineStart) + prefix + ta.value.substring(lineStart);
+    ta.selectionStart = ta.selectionEnd = lineStart + prefix.length;
+    ta.focus();
+    update();
+  }
+
+  // Init
+  update();
+</script>
+</body>
+</html>
