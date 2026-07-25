@@ -1,4 +1,4 @@
-title: AvocadoSat Films
+title: Avocados At Films
 tagline: Movie Reviews & Articles / Κριτικές Ταινιών & Άρθρα
 description: Honest movie reviews and articles in Greek and English.
 baseurl: ""
@@ -29,7 +29,7 @@ social:
   tiktok: ""
 
 author:
-  name: AvocadoSat Films
+  name: Avocados At Films
 
 defaults:
   - scope:
@@ -38,4 +38,4 @@ defaults:
     values:
       layout: post
       lang: en
-      author: "AvocadoSat Films"
+      author: "Avocados At Films"
