@@ -9,7 +9,7 @@ description: Browse movie reviews and articles by genre
   <p>Browse by genre</p>
 </div>
 
-{% assign all_genres = site.posts | map: "genre" | sort | uniq %}
+{% assign all_genres = site.posts | map: "genre" | compact | sort | uniq %}
 {% for genre in all_genres %}
 {% assign g = genre | strip %}
 {% if g != "" %}
