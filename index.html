@@ -40,7 +40,7 @@ title: Home
 
 {% assign reviews = site.posts | where: "category", "Review" | limit: 6 %}
 {% if reviews.size > 0 %}
-<h2 class="section-label">Latest Reviews</h2>
+<h2 class="section-label">Τελευταίες Κριτικές</h2>
 <div class="posts-grid">
     {% for post in reviews %}
     <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">
@@ -69,7 +69,7 @@ title: Home
 
 {% assign upcoming_posts = site.posts | where: "category", "Upcoming" | limit: 4 %}
 {% if upcoming_posts.size > 0 %}
-<h2 class="section-label">Upcoming Films</h2>
+<h2 class="section-label">Επερχόμενες Ταινίες</h2>
 <div class="post-list">
     {% for post in upcoming_posts %}
     <article class="post-list-item" data-lang="{{ post.lang | default: 'both' }}">
@@ -91,7 +91,7 @@ title: Home
 
 {% assign articles = site.posts | where: "category", "Article" | limit: 3 %}
 {% if articles.size > 0 %}
-<h2 class="section-label">Articles</h2>
+<h2 class="section-label">Άρθρα</h2>
 <div class="posts-grid">
     {% for post in articles %}
     <article class="post-card" data-lang="{{ post.lang | default: 'both' }}">

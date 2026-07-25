@@ -1,15 +1,15 @@
 <!-- Search -->
 <div class="sidebar-widget">
-  <h3 class="widget-title">Search</h3>
+  <h3 class="widget-title">Αναζήτηση</h3>
   <div class="search-wrapper">
     <span class="search-icon">&#128269;</span>
-    <input type="text" class="search-input" placeholder="Search articles..." aria-label="Search">
+    <input type="text" class="search-input" placeholder="Αναζήτηση άρθρων..." aria-label="Αναζήτηση">
   </div>
 </div>
 
 <!-- Recent Posts -->
 <div class="sidebar-widget">
-  <h3 class="widget-title">Recent Posts</h3>
+  <h3 class="widget-title">Πρόσφατα Άρθρα</h3>
   <div class="widget-post-list">
     {% for post in site.posts limit: 5 %}
     <div class="widget-post-item">
@@ -29,7 +29,7 @@
 
 <!-- Top Rated -->
 <div class="sidebar-widget">
-  <h3 class="widget-title">Top Rated</h3>
+  <h3 class="widget-title">Κορυφαίες Κριτικές</h3>
   <div class="widget-post-list">
     {% assign top_rated = site.posts | where_exp: "p", "p.rating" | sort: "rating" | reverse | limit: 4 %}
     {% for post in top_rated %}
@@ -52,7 +52,7 @@
 {% assign all_tags = site.posts | map: "tags" | join: "," | split: "," | sort | uniq %}
 {% if all_tags.size > 0 %}
 <div class="sidebar-widget">
-  <h3 class="widget-title">Tags</h3>
+  <h3 class="widget-title">Ετικέτες</h3>
   <div class="tags-cloud">
     {% for tag in all_tags %}
     {% assign t = tag | strip %}
@@ -67,8 +67,8 @@
 <!-- Newsletter -->
 <div class="sidebar-widget">
   <h3 class="widget-title">Newsletter</h3>
-  <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--accent);font-size:13px;\'>&#10003; Subscribed! Thank you.</p>';">
-    <p>Get the latest reviews straight to your inbox.</p>
+  <form class="newsletter-form" onsubmit="event.preventDefault(); this.innerHTML='<p style=\'color:var(--accent);font-size:13px;\'>&#10003; Εγγραφήκατε! Ευχαριστούμε.</p>';">
+    <p>Λάβετε τις νέες κριτικές απευθείας στο inbox σας.</p>
     <input type="email" placeholder="your@email.com" required aria-label="Email address">
     <button type="submit">Subscribe</button>
   </form>

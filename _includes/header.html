@@ -5,10 +5,10 @@
       <a href="{{ '/' | relative_url }}" class="site-logo">AVOCADOS AT<span>FILMS</span></a>
 
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Home</a>
-        <a href="{{ '/reviews/' | relative_url }}"{% if page.url contains '/reviews' %} class="active"{% endif %}>Reviews</a>
-        <a href="{{ '/upcoming/' | relative_url }}"{% if page.url contains '/upcoming' %} class="active"{% endif %}>Upcoming</a>
-        <a href="{{ '/categories/' | relative_url }}"{% if page.url contains '/categories' %} class="active"{% endif %}>Categories</a>
+        <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} class="active"{% endif %}>Αρχική</a>
+        <a href="{{ '/reviews/' | relative_url }}"{% if page.url contains '/reviews' %} class="active"{% endif %}>Κριτικές</a>
+        <a href="{{ '/upcoming/' | relative_url }}"{% if page.url contains '/upcoming' %} class="active"{% endif %}>Επερχόμενες</a>
+        <a href="{{ '/categories/' | relative_url }}"{% if page.url contains '/categories' %} class="active"{% endif %}>Κατηγορίες</a>
       </nav>
 
       <div class="header-right">
@@ -36,9 +36,9 @@
   </div>
 
   <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-    <a href="{{ '/' | relative_url }}">Home</a>
-    <a href="{{ '/reviews/' | relative_url }}">Reviews</a>
-    <a href="{{ '/upcoming/' | relative_url }}">Upcoming</a>
-    <a href="{{ '/categories/' | relative_url }}">Categories</a>
+    <a href="{{ '/' | relative_url }}">Αρχική</a>
+    <a href="{{ '/reviews/' | relative_url }}">Κριτικές</a>
+    <a href="{{ '/upcoming/' | relative_url }}">Επερχόμενες</a>
+    <a href="{{ '/categories/' | relative_url }}">Κατηγορίες</a>
   </nav>
 </header>
