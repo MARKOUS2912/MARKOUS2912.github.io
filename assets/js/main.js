@@ -10,37 +10,6 @@
   }
 })();
 
-// Language switcher
-(function () {
-  var btns = document.querySelectorAll('.lang-btn');
-  if (!btns.length) return;
-
-  function applyLang(lang) {
-    localStorage.setItem('skibidi-lang', lang);
-
-    // sync all lang buttons (desktop + mobile)
-    btns.forEach(function (b) {
-      b.classList.toggle('active', b.dataset.lang === lang);
-    });
-
-    // filter cards — but never touch .featured-post (slider handles those)
-    document.querySelectorAll('[data-lang]').forEach(function (el) {
-      if (el.classList.contains('featured-post')) return;
-      var elLang = el.dataset.lang;
-      var show = lang === 'all' || elLang === lang || elLang === 'both';
-      el.style.display = show ? '' : 'none';
-    });
-  }
-
-  btns.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      applyLang(btn.dataset.lang);
-    });
-  });
-
-  applyLang(localStorage.getItem('skibidi-lang') || 'all');
-})();
-
 // Search filter
 (function () {
   const input = document.querySelector('.search-input');

@@ -12,11 +12,6 @@
       </nav>
 
       <div class="header-right">
-        <div class="lang-switcher">
-          <button class="lang-btn active" data-lang="all" title="Show all languages">ALL</button>
-          <button class="lang-btn" data-lang="en" title="English only">EN</button>
-          <button class="lang-btn" data-lang="gr" title="Greek only">GR</button>
-        </div>
         <div class="social-icons">
           {% if site.social.instagram != "" %}
           <a href="https://instagram.com/{{ site.social.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
@@ -45,10 +40,5 @@
     <a href="{{ '/reviews/' | relative_url }}">Reviews</a>
     <a href="{{ '/upcoming/' | relative_url }}">Upcoming</a>
     <a href="{{ '/categories/' | relative_url }}">Categories</a>
-    <div class="mobile-nav-footer">
-      <button class="lang-btn" data-lang="all">ALL</button>
-      <button class="lang-btn" data-lang="en">EN</button>
-      <button class="lang-btn" data-lang="gr">GR</button>
-    </div>
   </nav>
 </header>

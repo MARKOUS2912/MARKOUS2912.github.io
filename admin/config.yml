@@ -38,13 +38,6 @@ collections:
           - Sci-Fi
           - Romance
           - Documentary
-      - label: Language
-        name: lang
-        widget: select
-        options:
-          - { label: "English", value: "en" }
-          - { label: "Greek (Ελληνικά)", value: "gr" }
-          - { label: "Both", value: "both" }
       - { label: Poster Image, name: image, widget: image, required: false }
       - label: "Rating (0–10)"
         name: rating
@@ -57,7 +50,7 @@ collections:
       - { label: "Verdict (short phrase)", name: verdict, widget: string, required: false }
       - { label: "Duration", name: duration, widget: string, required: false, hint: "e.g. 2h 15m" }
       - { label: "Release Date (Upcoming only)", name: release_date, widget: string, required: false, hint: "e.g. May 1, 2026" }
-      - { label: Author, name: author, widget: string, default: "Skibidi Reviews" }
+      - { label: Author, name: author, widget: string, default: "Avocados At Films" }
       - label: Tags
         name: tags
         widget: list

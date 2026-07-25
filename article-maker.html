@@ -366,14 +366,6 @@
         </div>
       </div>
 
-      <div class="field">
-        <label>Language</label>
-        <select id="lang" onchange="update()">
-          <option value="en">English (EN)</option>
-          <option value="gr">Greek / Ελληνικά (GR)</option>
-          <option value="both">Both</option>
-        </select>
-      </div>
     </div>
 
     <!-- Media -->
@@ -501,7 +493,6 @@
     const author   = document.getElementById('author').value || 'Avocados At Films';
     const category = document.getElementById('category').value;
     const genre    = document.getElementById('genre').value;
-    const lang     = document.getElementById('lang').value;
     const image    = document.getElementById('image').value;
     const rating   = document.getElementById('rating').value;
     const duration = document.getElementById('duration').value;
@@ -517,7 +508,7 @@
     if (date)     fm += `date: ${date}\n`;
     fm += `category: ${category}\n`;
     if (genre)    fm += `genre: ${genre}\n`;
-    fm += `lang: ${lang}\n`;
+    fm += `lang: gr\n`;
     if (image)    fm += `image: "${image}"\n`;
     if (category === 'Review') {
       if (rating)   fm += `rating: ${rating}\n`;
